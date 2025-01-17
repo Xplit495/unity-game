@@ -10,7 +10,6 @@ public class ScreamerLunch : MonoBehaviour
 
     private void Start()
     {
-        // Désactiver le RawImage et le Video Player au lancement
         if (rawImage != null)
             rawImage.SetActive(false);
 
@@ -22,17 +21,13 @@ public class ScreamerLunch : MonoBehaviour
     {
         Debug.Log("Lecture de la vidéo...");
 
-        // Vérifiez si les références sont bien assignées
         if (videoPlayer == null || rawImage == null)
         {
             Debug.LogError("VideoPlayer ou RawImage n'est pas assigné !");
             return;
         }
 
-        // Activer le RawImage
         rawImage.SetActive(true);
-
-        // Activer et démarrer le Video Player
         videoPlayer.gameObject.SetActive(true);
         videoPlayer.Play();
 
@@ -43,11 +38,7 @@ public class ScreamerLunch : MonoBehaviour
     private void HideVideo()
     {
         Debug.Log("Masquage de la vidéo...");
-
-        // Arrêter la vidéo
         videoPlayer.Stop();
-
-        // Désactiver le RawImage et le Video Player
         rawImage.SetActive(false);
         videoPlayer.gameObject.SetActive(false);
     }

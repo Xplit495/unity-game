@@ -51,4 +51,18 @@ public class ScreamerLunch : MonoBehaviour
         rawImage.SetActive(false);
         videoPlayer.gameObject.SetActive(false);
     }
+    
+    public void LunchSGameScene()
+    {
+        Debug.Log("Lancement de la scène de jeu...");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+    }
+    
+    public void StopGame()
+    {
+        Debug.Log("Arrêt du jeu...");
+        Application.Quit();
+    }
+    
+    
 }

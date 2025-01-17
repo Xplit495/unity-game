@@ -3,17 +3,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float speed = 5f;
-    public float jumpForce = 10f;
+    public float speed = 5f;         // Vitesse de déplacement
+    public float jumpForce = 10f;   // Force de saut
 
     [Header("Ground Check")]
-    private bool isGrounded;
+    public Transform groundCheck;   // Position pour vérifier le sol
+    public float groundCheckRadius = 0.2f; // Rayon pour la détection du sol
+    public LayerMask groundLayer;   // Masque pour le sol
 
-    [Header("References")]
-    private Rigidbody2D rb;
-    private Animator animator;
-
-    private bool facingRight = true; // Indique si le personnage regarde vers la droite
+    private bool isGrounded;        // Indique si le joueur est au sol
+    private Rigidbody2D rb;         // Référence au Rigidbody2D
+    private Animator animator;      // Référence à l'Animator
+    private bool facingRight = true; // Indique si le personnage regarde à droite
 
     void Start()
     {
@@ -23,14 +24,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // Vérifier si le joueur est au sol
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
         // Déplacement horizontal
         float horizontalInput = Input.GetAxis("Horizontal");
         rb.linearVelocity = new Vector2(horizontalInput * speed, rb.linearVelocity.y);
 
-        // Mise à jour du paramètre "Speed"
-        animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        // Mettre à jour l'animation de vitesse
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        }
 
-        // Inverser le sprite en fonction de la direction
+        // Inverser la direction du sprite si nécessaire
         if (horizontalInput > 0 && !facingRight)
         {
             Flip();
@@ -40,59 +47,35 @@ public class PlayerMovement : MonoBehaviour
             Flip();
         }
 
-        // Gérer le saut
+        // Sauter si au sol et bouton de saut pressé
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
-        // Mise à jour des paramètres liés au sol et à la vitesse verticale
-        animator.SetBool("Ground", isGrounded);
-        animator.SetFloat("vSpeed", rb.linearVelocity.y);
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Vérifie si le joueur touche le sol
-        if (collision.gameObject.CompareTag("Ground"))
+        // Mettre à jour l'état "Grounded" dans l'Animator
+        if (animator != null)
         {
-            isGrounded = true;
+            animator.SetBool("Ground", isGrounded);
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        // Vérifie si le joueur quitte le sol
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }
-
-    // Retourne le sprite horizontalement
+    // Retourner le sprite horizontalement
     void Flip()
     {
         facingRight = !facingRight; // Change la direction actuelle
         Vector3 scale = transform.localScale;
-        scale.x *= -1; // Inverse l'échelle sur l'axe X
+        scale.x *= -1;             // Inverse l'échelle sur l'axe X
         transform.localScale = scale;
     }
 
-    // Exemple pour déclencher une animation d'attaque
-    public void Attack()
+    // Afficher la zone de détection dans la scène pour débogage
+    void OnDrawGizmosSelected()
     {
-        animator.SetBool("Attack", true);
-    }
-
-    // Exemple pour déclencher une animation de blessure
-    public void Hurt()
-    {
-        animator.SetTrigger("Hurt");
-    }
-
-    // Exemple pour déclencher une animation de mort
-    public void Die()
-    {
-        animator.SetBool("Dead", true);
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        }
     }
 }

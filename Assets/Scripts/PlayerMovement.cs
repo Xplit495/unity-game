@@ -24,20 +24,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Vérifier si le joueur est au sol
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
         // Déplacement horizontal
         float horizontalInput = Input.GetAxis("Horizontal");
         rb.linearVelocity = new Vector2(horizontalInput * speed, rb.linearVelocity.y);
 
-        // Mettre à jour l'animation de vitesse
         if (animator != null)
         {
             animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
         }
 
-        // Inverser la direction du sprite si nécessaire
         if (horizontalInput > 0 && !facingRight)
         {
             Flip();
@@ -47,29 +44,25 @@ public class PlayerMovement : MonoBehaviour
             Flip();
         }
 
-        // Sauter si au sol et bouton de saut pressé
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
-        // Mettre à jour l'état "Grounded" dans l'Animator
         if (animator != null)
         {
             animator.SetBool("Ground", isGrounded);
         }
     }
 
-    // Retourner le sprite horizontalement
     void Flip()
     {
-        facingRight = !facingRight; // Change la direction actuelle
+        facingRight = !facingRight; 
         Vector3 scale = transform.localScale;
-        scale.x *= -1;             // Inverse l'échelle sur l'axe X
+        scale.x *= -1;             
         transform.localScale = scale;
     }
 
-    // Afficher la zone de détection dans la scène pour débogage
     void OnDrawGizmosSelected()
     {
         if (groundCheck != null)

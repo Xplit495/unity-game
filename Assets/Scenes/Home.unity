@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 45439710}
   - component: {fileID: 45439709}
   - component: {fileID: 45439712}
+  - component: {fileID: 45439713}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -346,9 +347,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 45439712}
-        m_TargetAssemblyTypeName: TestButtonClick, Assembly-CSharp
-        m_MethodName: ButtonClicked
+      - m_Target: {fileID: 45439713}
+        m_TargetAssemblyTypeName: ScreamerLunch, Assembly-CSharp
+        m_MethodName: StopGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -408,6 +409,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4105adca1e50f440a2ccea57b1fbae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &45439713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45439707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5af9911bf1251c448961b5cfe1bad35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 0}
+  rawImage: {fileID: 0}
+  videoDuration: 10
 --- !u!1 &112365232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,6 +1388,7 @@ GameObject:
   - component: {fileID: 1906566871}
   - component: {fileID: 1906566870}
   - component: {fileID: 1906566869}
+  - component: {fileID: 1906566872}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1442,7 +1459,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1906566870}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1906566872}
+        m_TargetAssemblyTypeName: ScreamerLunch, Assembly-CSharp
+        m_MethodName: LunchSGameScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1906566870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1481,6 +1510,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906566867}
   m_CullTransparentMesh: 1
+--- !u!114 &1906566872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906566867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5af9911bf1251c448961b5cfe1bad35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 0}
+  rawImage: {fileID: 0}
+  videoDuration: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
